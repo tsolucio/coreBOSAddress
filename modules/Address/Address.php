@@ -529,19 +529,17 @@ class Address extends CRMEntity {
 	 * @param String Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
 	 */
 	function vtlib_handler($modulename, $event_type) {
-            if($event_type == 'module.postinstall') {
-	            $modCont=Vtiger_Module::getInstance('Contacts');
-				$modAcc=Vtiger_Module::getInstance('Accounts');
-				$modInv=Vtiger_Module::getInstance('Invoice');
-				$modQuotes=Vtiger_Module::getInstance('Quotes');
-				$modSO=Vtiger_Module::getInstance('SalesOrder');
-				$modPO=Vtiger_Module::getInstance('PurchaseOrder');
-				$module=Vtiger_Module::getInstance('Address');
-			
-				if ($modCont) {
-					$modCont->setRelatedList($module, 'Address', Array('SELECT'),'get_related_list');
-					$modCont->addLink('HEADERSCRIPT', 'AddressContactsCapture', 'modules/Contacts/contactscapture.js');
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modCont);
+		if($event_type == 'module.postinstall') {
+			$admodule=Vtiger_Module::getInstance($modulename);
+			$admodule->addLink('HEADERSCRIPT', 'AddressCaptureFunctions', 'modules/Address/Address.js');
+			$mods = array('Contacts','Accounts','Invoice','Quotes','SalesOrder','PurchaseOrder');
+			foreach ($mods as $module) {
+				$modrel=Vtiger_Module::getInstance($module);
+				if ($modrel) {
+					if ($module=='Accounts' or $module=='Contacts') {
+						$modrel->setRelatedList($admodule, $modulename, Array('SELECT'),'get_related_list');
+					}
+					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modrel);
 					$field1 = new Vtiger_Field();
 					$field1->name = 'linktoaddressbilling';
 					$field1->column = 'linktoaddressbilling';
@@ -552,95 +550,8 @@ class Address extends CRMEntity {
 					$field1->presence = 0;
 					$field1->displaytype = 1;
 					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-	
-					$field2 = new Vtiger_Field();
-					$field2->name = 'linktoaddressshipping';
-					$field2->column = 'linktoaddressshipping';
-					$field2->label = 'Select Ship Address';
-					$field2->columntype = 'INT(11)';
-					$field2->uitype = 10;
-					$field2->typeofdata = 'I~O';
-					$field2->presence = 0;
-					$field2->displaytype = 1;
-					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
-				}
-				if ($modAcc) {
-					$modAcc->setRelatedList($module, 'Address', Array('SELECT'),'get_related_list');
-					$modAcc->addLink('HEADERSCRIPT', 'AddressAccountsCapture', 'modules/Accounts/accountscapture.js');
-					
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modAcc);
-	
-					$field1 = new Vtiger_Field();
-					$field1->name = 'linktoaddressbilling';
-					$field1->column = 'linktoaddressbilling';
-					$field1->label = 'Select Bill Address';
-					$field1->columntype = 'INT(11)';
-					$field1->uitype = 10;
-					$field1->typeofdata = 'I~O';
-					$field1->presence = 0;
-					$field1->displaytype = 1;
-					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-	
-					$field2 = new Vtiger_Field();
-					$field2->name = 'linktoaddressshipping';
-					$field2->column = 'linktoaddressshipping';
-					$field2->label = 'Select Ship Address';
-					$field2->columntype = 'INT(11)';
-					$field2->uitype = 10;
-					$field2->typeofdata = 'I~O';
-					$field2->presence = 0;
-					$field2->displaytype = 1;
-					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
-				}
-				if ($modInv) {
-					$modInv->addLink('HEADERSCRIPT', 'AddressInvoiceCapture', 'modules/Invoice/invoicecapture.js');
-						
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modInv);
-					$field1 = new Vtiger_Field();
-					$field1->name = 'linktoaddressbilling';
-					$field1->column = 'linktoaddressbilling';
-					$field1->label = 'Select Bill Address';
-					$field1->columntype = 'INT(11)';
-					$field1->uitype = 10;
-					$field1->typeofdata = 'I~O';
-					$field1->presence = 0;
-					$field1->displaytype = 1;
-					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-		
-					$field2 = new Vtiger_Field();
-					$field2->name = 'linktoaddressshipping';
-					$field2->column = 'linktoaddressshipping';
-					$field2->label = 'Select Ship Address';
-					$field2->columntype = 'INT(11)';
-					$field2->uitype = 10;
-					$field2->typeofdata = 'I~O';
-					$field2->presence = 0;
-					$field2->displaytype = 1;
-					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
-				}
+					$field1->setRelatedModules(Array($modulename));
 
-				if ($modQuotes) {
-				    $modQuotes->addLink('HEADERSCRIPT', 'AddressQuotesCapture', 'modules/Quotes/quotescapture.js');
-					
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modQuotes);
-					$field1 = new Vtiger_Field();
-					$field1->name = 'linktoaddressbilling';
-					$field1->column = 'linktoaddressbilling';
-					$field1->label = 'Select Bill Address';
-					$field1->columntype = 'INT(11)';
-					$field1->uitype = 10;
-					$field1->typeofdata = 'I~O';
-					$field1->presence = 0;
-					$field1->displaytype = 1;
-					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-		
 					$field2 = new Vtiger_Field();
 					$field2->name = 'linktoaddressshipping';
 					$field2->column = 'linktoaddressshipping';
@@ -651,64 +562,9 @@ class Address extends CRMEntity {
 					$field2->presence = 0;
 					$field2->displaytype = 1;
 					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
-				} 
-				if ($modSO) {
-					$modSO->addLink('HEADERSCRIPT', 'AddressSalesOrderCapture', 'modules/SalesOrder/salesordercapture.js');
-				
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modSO);
-					$field1 = new Vtiger_Field();
-					$field1->name = 'linktoaddressbilling';
-					$field1->column = 'linktoaddressbilling';
-					$field1->label = 'Select Bill Address';
-					$field1->columntype = 'INT(11)';
-					$field1->uitype = 10;
-					$field1->typeofdata = 'I~O';
-					$field1->presence = 0;
-					$field1->displaytype = 1;
-					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-	
-					$field2 = new Vtiger_Field();
-					$field2->name = 'linktoaddressshipping';
-					$field2->column = 'linktoaddressshipping';
-					$field2->label = 'Select Ship Address';
-					$field2->columntype = 'INT(11)';
-					$field2->uitype = 10;
-					$field2->typeofdata = 'I~O';
-					$field2->presence = 0;
-					$field2->displaytype = 1;
-					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
+					$field2->setRelatedModules(Array($modulename));
 				}
-				if ($modPO) {
-					$modPO->addLink('HEADERSCRIPT', 'AddressPurchaseOrderCapture', 'modules/PurchaseOrder/purchaseordercapture.js');
-				
-					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modPO);
-					$field1 = new Vtiger_Field();
-					$field1->name = 'linktoaddressbilling';
-					$field1->column = 'linktoaddressbilling';
-					$field1->label = 'Select Bill Address';
-					$field1->columntype = 'INT(11)';
-					$field1->uitype = 10;
-					$field1->typeofdata = 'I~O';
-					$field1->presence = 0;
-					$field1->displaytype = 1;
-					$block->addField($field1);
-					$field1->setRelatedModules(Array('Address'));
-	
-					$field2 = new Vtiger_Field();
-					$field2->name = 'linktoaddressshipping';
-					$field2->column = 'linktoaddressshipping';
-					$field2->label = 'Select Ship Address';
-					$field2->columntype = 'INT(11)';
-					$field2->uitype = 10;
-					$field2->typeofdata = 'I~O';
-					$field2->presence = 0;
-					$field2->displaytype = 1;
-					$block->addField($field2);
-					$field2->setRelatedModules(Array('Address'));
-				}              
+			}
 			// TODO Handle post installation actions
 			$this->setModuleSeqNumber('configure', $modulename, $modulename.'-', '0000001');
 		} else if($event_type == 'module.disabled') {
