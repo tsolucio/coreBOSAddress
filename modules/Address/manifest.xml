@@ -2,7 +2,7 @@
 <module>
 <name>Address</name>
 <label>Address</label>
-<parent>Analytics</parent>
+<parent>Tools</parent>
 <dependencies>
 <vtiger_version>5.5.0</vtiger_version>
 </dependencies>
@@ -279,6 +279,9 @@
 <masseditable>1</masseditable>
 </field>
 </fields>
+</block>
+<block>
+<label>LBL_CUSTOM_INFORMATION</label>
 </block>
 <block>
 <label>LBL_DESCRIPTION_INFORMATION</label>

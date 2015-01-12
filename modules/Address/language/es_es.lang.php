@@ -9,14 +9,23 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-	'ModuleName' => 'Module Name',
-	'SINGLE_ModuleName' => 'Module Name',
-	'ModuleName ID' => 'Module Name ID',
+    'Address' => 'Dirección',
+    'SINGLE_Address' => 'Dirección',
+    'Address ID' => 'ID Dirección',
+    'Address Number' => 'Nº Dirección',
+    'Reference' => 'Referencia',
+    'Street' => 'Calle',
+    'PO Box' => 'Apartado Correos',
+    'City' => 'Ciudad',
+    'State' => 'Provincia',
+    'Postal Code' => 'Código Postal',
+    'Country' => 'País',
+    'Select Bill Address' => 'Selecciona Dirección Facturación',
+    'Select Ship Address' => 'Selecciona Dirección Envío',
 
-	'LBL_CUSTOM_INFORMATION' => 'Información Personalizada',
-	'LBL_MODULEBLOCK_INFORMATION' => 'Información ModuleName',
-	'LBL_DESCRIPTION_INFORMATION' => 'Descripción',
-
+    'LBL_ADDRESS_INFORMATION' => 'Información Dirección',
+    'LBL_DESCRIPTION_INFORMATION' => 'Descripción',
+    'LBL_CUSTOM_INFORMATION' => 'Información Personalizada',
 );
 
 ?>

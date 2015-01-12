@@ -25,6 +25,7 @@ $mod_strings = Array(
 
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
     'LBL_DESCRIPTION_INFORMATION' => 'Description',
+    'LBL_CUSTOM_INFORMATION' => 'Custom Information',
 );
 
 ?>
