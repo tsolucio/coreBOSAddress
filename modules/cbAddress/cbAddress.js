@@ -9,10 +9,21 @@
 document.write("<script type='text/javascript' src='include/js/Inventory.js'></script>");
 
 //function for the popup capture hook
-function cbaddresscapture(recordid,value,target_fieldname) {
+function cbAddressCapture(recordid,value,target_fieldname) {
 	vtlib_setvalue_from_popup(recordid,value,target_fieldname);
-  //alert('This is our special intercepted capture function');
-  window.close();
+	var module = document.getElementById('srcmodule');
+	switch (module) {
+		case 'Accounts':
+		case 'SalesOrder':
+		case 'Quotes':
+		case 'PurchaseOrder':
+		case 'Invoice':
+			InventorysetValueFromCapture(recordid,target_fieldname);
+		break;
+		case 'Contacts':
+			ContactssetValueFromCapture(recordid,target_fieldname);
+		break;
+	}
 }
 
 function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
@@ -42,4 +53,72 @@ function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
 			window.open(baseURL+"&acc_id="+accountid+"&cont_id="+contactid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
 		break;
 	}
+}
+
+function ContactssetValueFromCapture(recordid,target_fieldname) {
+	var url = "module=cbAddress&action=cbAddressAjax&ajax=true&file=getAddressInfo&record="+recordid;
+	new Ajax.Request(
+		'index.php',
+		{
+			queue: {
+				position: 'end',
+				scope: 'command'
+			},
+			method: 'post',
+			postBody:url,
+			onComplete: function(response) {
+				var res = JSON.parse(response.responseText);
+				if(target_fieldname == 'linktoaddressbilling'){
+				document.EditView.mailingstreet.value = res.street;
+				document.EditView.mailingpobox.value = res.pobox;
+				document.EditView.mailingcity.value = res.city;
+				document.EditView.mailingstate.value = res.state;
+				document.EditView.mailingzip.value = res.postalcode;
+				document.EditView.mailingcountry.value = res.country;
+				}
+				if(target_fieldname == 'linktoaddressshipping'){
+				document.EditView.otherstreet.value = res.street;
+				document.EditView.otherpobox.value = res.pobox;
+				document.EditView.othercity.value = res.city;
+				document.EditView.otherstate.value = res.state;
+				document.EditView.otherzip.value = res.postalcode;
+				document.EditView.othercountry.value = res.country;
+				}
+				window.close();
+			}
+		});
+}
+
+function InventorysetValueFromCapture(recordid,target_fieldname) {
+	var url = "module=cbAddress&action=cbAddressAjax&ajax=true&file=getAddressInfo&record="+recordid;
+	new Ajax.Request(
+		'index.php',
+		{
+			queue: {
+				position: 'end',
+				scope: 'command'
+			},
+			method: 'post',
+			postBody:url,
+			onComplete: function(response) {
+				var res = JSON.parse(response.responseText);
+				if(target_fieldname == 'linktoaddressbilling'){
+				document.EditView.bill_street.value = res.street;
+				document.EditView.bill_pobox.value = res.pobox;
+				document.EditView.bill_city.value = res.city;
+				document.EditView.bill_state.value = res.state;
+				document.EditView.bill_code.value = res.postalcode;
+				document.EditView.bill_country.value = res.country;
+				}
+				if(target_fieldname == 'linktoaddressshipping'){
+				document.EditView.ship_street.value = res.street;
+				document.EditView.ship_pobox.value = res.pobox;
+				document.EditView.ship_city.value = res.city;
+				document.EditView.ship_state.value = res.state;
+				document.EditView.ship_code.value = res.postalcode;
+				document.EditView.ship_country.value = res.country;
+				}
+				window.close();
+			}
+		});
 }

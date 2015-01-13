@@ -16,7 +16,7 @@ class cbAddress extends CRMEntity {
 	var $table_name = 'vtiger_cbaddress';
 	var $table_index= 'cbaddressid';
 	var $column_fields = Array();
-	var $popup_function = 'cbaddresscapture';
+	var $popup_function = 'cbAddressCapture';
 	
 
 	/** Indicator if this is a custom module or standard module */
