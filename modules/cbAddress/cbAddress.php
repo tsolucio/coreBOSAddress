@@ -153,25 +153,10 @@ class cbAddress extends CRMEntity {
 	}
 
 	function getvtlib_open_popup_window_function($fieldname,$basemodule) {
-		if (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Invoice') {
-			return 'addressCaptureOnInvoice';
-		}
-		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Contacts') {
-			return 'addressCaptureOnContacts';
-		}
-		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Accounts') {
-			return 'addressCaptureOnAccounts';
-		}
-		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Quotes') {
-			return 'addressCaptureOnQuotes';
-		}
-		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='SalesOrder') {
-			return 'addressCaptureOnSalesOrder';
-		}
-		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='PurchaseOrder') {
-			return 'addressCaptureOnPurchaseOrder';
-		}
-		else {
+		if (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping')
+		 and ($basemodule=='Invoice' or $basemodule=='Contacts' or $basemodule=='Accounts' or $basemodule=='Quotes' or $basemodule=='PurchaseOrder' or $basemodule=='SalesOrder')) {
+			return 'cbAddressOpenCapture';
+		} else {
 			return 'vtlib_open_popup_window';
 		}
 	}
@@ -536,9 +521,8 @@ class cbAddress extends CRMEntity {
 			foreach ($mods as $module) {
 				$modrel=Vtiger_Module::getInstance($module);
 				if ($modrel) {
-					if ($module=='Accounts' or $module=='Contacts') {
-						$modrel->setRelatedList($admodule, $modulename, Array('SELECT'),'get_related_list');
-					}
+					$buttons = ($module=='Accounts' or $module=='Contacts') ? array('SELECT') : array();
+					$modrel->setRelatedList($admodule, $modulename, $buttons,'get_related_list');
 					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modrel);
 					$field1 = new Vtiger_Field();
 					$field1->name = 'linktoaddressbilling';

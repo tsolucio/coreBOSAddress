@@ -15,43 +15,31 @@ function cbaddresscapture(recordid,value,target_fieldname) {
   window.close();
 }
 
-function addressCaptureOnAccounts(fromlink,fldname,MODULE,ID) {
-	var accountid = document.getElementsByName("account_id")[0].value;
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&acc_id="+accountid+"&srcmodule="+MODULE+"&forrecord="+ID,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
-}
-
-function addressCaptureOnContacts(fromlink,fldname,MODULE,ID) {
-	var accountid = document.getElementsByName("account_id")[0].value;
-	var contactid = document.getElementsByName("contact_id")[0].value;
-	//alert(accountid);
-	//alert(contactid);
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&acc_id="+accountid+"&cont_id="+contactid+"&srcmodule="+MODULE+"&forrecord="+ID,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
-}
-
-function addressCaptureOnSalesOrder(fromlink,fldname,MODULE,ID) {
-	var accountid = document.getElementsByName("account_id")[0].value;
-	var contactid = document.getElementsByName("contact_id")[0].value;
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&srcmodule="+MODULE+"&cont_id="+contactid+"&acc_id="+accountid+"&relmod_id="+accountid,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
-}
-
-function addressCaptureOnQuotes(fromlink,fldname,MODULE,ID) {
-	var accountid = document.getElementsByName("account_id")[0].value;
-	var contactid = document.getElementsByName("contact_id")[0].value;
-	//alert(accountid);
-	//alert(contactid);
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&acc_id="+accountid+"&cont_id="+contactid+"&srcmodule="+MODULE+"&forrecord="+ID,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
-}
-
-function addressCaptureOnPurchaseOrder(fromlink,fldname,MODULE,ID) {
-	//var accountid = document.getElementsByName("account_id")[0].value;
-	var contactid = document.getElementsByName("contact_id")[0].value;
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&cont_id="+contactid+"&srcmodule="+MODULE+"&forrecord="+ID,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
-}
-
-function addressCaptureOnInvoice(fromlink,fldname,MODULE,ID) {
-	var accountid = document.getElementsByName("account_id")[0].value;
-	var contactid = document.getElementsByName("contact_id")[0].value;
-	//alert(accountid);
-	//alert(contactid);
-	window.open("index.php?module=Address&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&acc_id="+accountid+"&cont_id="+contactid+"&srcmodule="+MODULE+"&relmod_id="+accountid,"vtlibui10","width=680,height=602,resizable=0,scrollbars=0,top=150,left=200");
+function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
+	var WindowSettings = "width=680,height=602,resizable=0,scrollbars=0,top=150,left=200";
+	var baseURL = "index.php?module=cbAddress&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&srcmodule="+MODULE;
+	if (MODULE != 'PurchaseOrder')
+		var accountid = document.getElementsByName("account_id")[0].value;
+	if (MODULE != 'Accounts')
+		var contactid = document.getElementsByName("contact_id")[0].value;
+	switch (MODULE) {
+		case 'Accounts':
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid,"vtlibui10",WindowSettings);
+		break;
+		case 'Contacts':
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid,"vtlibui10",WindowSettings);
+		break;
+		case 'SalesOrder':
+			window.open(baseURL+"&cont_id="+contactid+"&acc_id="+accountid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
+		break;
+		case 'Quotes':
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid,"vtlibui10",WindowSettings);
+		break;
+		case 'PurchaseOrder':
+			window.open(baseURL+"&forrecord="+ID+"&cont_id="+contactid,"vtlibui10",WindowSettings);
+		break;
+		case 'Invoice':
+			window.open(baseURL+"&acc_id="+accountid+"&cont_id="+contactid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
+		break;
+	}
 }
