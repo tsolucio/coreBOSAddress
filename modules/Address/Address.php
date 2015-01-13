@@ -10,13 +10,13 @@
 require_once('data/CRMEntity.php');
 require_once('data/Tracker.php');
 
-class Address extends CRMEntity {
+class cbAddress extends CRMEntity {
 	var $db, $log; // Used in class functions of CRMEntity
 
-	var $table_name = 'vtiger_address';
-	var $table_index= 'addressid';
+	var $table_name = 'vtiger_cbaddress';
+	var $table_index= 'cbaddressid';
 	var $column_fields = Array();
-	var $popup_function = 'mycapture';
+	var $popup_function = 'cbaddresscapture';
 	
 
 	/** Indicator if this is a custom module or standard module */
@@ -25,20 +25,20 @@ class Address extends CRMEntity {
 	/**
 	 * Mandatory table for supporting custom fields.
 	 */
-	var $customFieldTable = Array('vtiger_addresscf', 'addressid');
+	var $customFieldTable = Array('vtiger_cbaddresscf', 'cbaddressid');
 
 	/**
 	 * Mandatory for Saving, Include tables related to this module.
 	 */
-	var $tab_name = Array('vtiger_crmentity', 'vtiger_address', 'vtiger_addresscf');
+	var $tab_name = Array('vtiger_crmentity', 'vtiger_cbaddress', 'vtiger_cbaddresscf');
 
 	/**
 	 * Mandatory for Saving, Include tablename and tablekey columnname here.
 	 */
 	var $tab_name_index = Array(
             'vtiger_crmentity' => 'crmid',
-            'vtiger_address'   => 'addressid',
-	    	'vtiger_addresscf' => 'addressid');
+            'vtiger_cbaddress'   => 'cbaddressid',
+	    	'vtiger_cbaddresscf' => 'cbaddressid');
 
 	/**
 	 * Mandatory for Listing (Related listview)
@@ -46,18 +46,18 @@ class Address extends CRMEntity {
 	var $list_fields = Array (
 		/* Format: Field Label => Array(tablename, columnname) */
 		// tablename should not have prefix 'vtiger_'
-            'Address Number'=> Array('address', 'addressno'),
-            'Reference'=> Array('address', 'reference'),
-            'Street'=> Array('address', 'street'),
-            'PO Box'=> Array('address', 'pobox'),
-            'City'=> Array('address', 'city'),
-            'State'=> Array('address', 'state'),
-            'Postal Code'=> Array('address', 'postalcode'),
-            'Country'=> Array('address', 'country')
+            'Address Number'=> Array('cbaddress', 'cbcbaddressno'),
+            'Reference'=> Array('cbaddress', 'reference'),
+            'Street'=> Array('cbaddress', 'street'),
+            'PO Box'=> Array('cbaddress', 'pobox'),
+            'City'=> Array('cbaddress', 'city'),
+            'State'=> Array('cbaddress', 'state'),
+            'Postal Code'=> Array('cbaddress', 'postalcode'),
+            'Country'=> Array('cbaddress', 'country')
 	);
 	var $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
-            'Address Number'=> 'addressno',
+            'Address Number'=> 'cbcbaddressno',
             'Reference'=> 'reference',
             'Street'=> 'street',
             'PO Box'=> 'pobox',
@@ -68,24 +68,24 @@ class Address extends CRMEntity {
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'addressno';
+	var $list_link_field = 'cbcbaddressno';
 
 	// For Popup listview and UI type support
 	var $search_fields = Array(
 		/* Format: Field Label => Array(tablename, columnname) */
 		// tablename should not have prefix 'vtiger_'
-            'Address Number'=> Array('address', 'addressno'),
-            'Reference'=> Array('address', 'reference'),
-            'Street'=> Array('address', 'street'),
-            'PO Box'=> Array('address', 'pobox'),
-            'City'=> Array('address', 'city'),
-            'State'=> Array('address', 'state'),
-            'Postal Code'=> Array('address', 'postalcode'),
-            'Country'=> Array('address', 'country')
+            'Address Number'=> Array('cbaddress', 'cbcbaddressno'),
+            'Reference'=> Array('cbaddress', 'reference'),
+            'Street'=> Array('cbaddress', 'street'),
+            'PO Box'=> Array('cbaddress', 'pobox'),
+            'City'=> Array('cbaddress', 'city'),
+            'State'=> Array('cbaddress', 'state'),
+            'Postal Code'=> Array('cbaddress', 'postalcode'),
+            'Country'=> Array('cbaddress', 'country')
 	);
 	var $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
-            'Address Number'=> 'addressno',
+            'Address Number'=> 'cbcbaddressno',
             'Reference'=> 'reference',
             'Street'=> 'street',
             'PO Box'=> 'pobox',
@@ -96,28 +96,28 @@ class Address extends CRMEntity {
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('addressno');
+	var $popup_fields = Array('cbcbaddressno');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
 	var $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'addressno';
+	var $def_basicsearch_col = 'cbcbaddressno';
 
 	// Column value to use on detail view record text display
-	var $def_detailview_recname = 'addressno';
+	var $def_detailview_recname = 'cbaddressno';
 
 	// Required Information for enabling Import feature
-	var $required_fields = Array('addressno'=>1);
+	var $required_fields = Array('cbaddressno'=>1);
 
 	// Callback function list during Importing
 	var $special_functions = Array('set_import_assigned_user');
 
-	var $default_order_by = 'addressno';
+	var $default_order_by = 'cbaddressno';
 	var $default_sort_order='ASC';
 	// Used when enabling/disabling the mandatory fields for the module.
 	// Refers to vtiger_field.fieldname values.
-	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'addressno');
+	var $mandatory_fields = Array('createdtime', 'modifiedtime', 'cbaddressno');
 	
 	function __construct() {
 		global $log, $currentModule;
@@ -154,24 +154,24 @@ class Address extends CRMEntity {
 
 	function getvtlib_open_popup_window_function($fieldname,$basemodule) {
 		if (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Invoice') {
-				return 'addressCaptureOnInvoice';
+			return 'addressCaptureOnInvoice';
 		}
 		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Contacts') {
-				return 'addressCaptureOnContacts';
+			return 'addressCaptureOnContacts';
 		}
 		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Accounts') {
-				return 'addressCaptureOnAccounts';
+			return 'addressCaptureOnAccounts';
 		}
 		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='Quotes') {
-				return 'addressCaptureOnQuotes';
+			return 'addressCaptureOnQuotes';
 		}
 		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='SalesOrder') {
-				return 'addressCaptureOnSalesOrder';
+			return 'addressCaptureOnSalesOrder';
 		}
 		elseif (($fieldname=='linktoaddressbilling' || $fieldname=='linktoaddressshipping') and $basemodule=='PurchaseOrder') {
-				return 'addressCaptureOnPurchaseOrder';
+			return 'addressCaptureOnPurchaseOrder';
 		}
-		 else {
+		else {
 			return 'vtlib_open_popup_window';
 		}
 	}
@@ -192,13 +192,13 @@ class Address extends CRMEntity {
 			$log->debug("modulinv".$module);
 		$accountID = vtlib_purify($_REQUEST['acc_id']);
 		$contactID = vtlib_purify($_REQUEST['cont_id']);
-		/*$query = "SELECT vtiger_crmentity.*, vtiger_address.*, vtiger_addresscf.* 
-			FROM vtiger_address 
-			INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_address.addressid  
-			INNER JOIN vtiger_addresscf ON vtiger_addresscf.addressid = vtiger_address.addressid 
+		/*$query = "SELECT vtiger_crmentity.*, vtiger_cbaddress.*, vtiger_cbaddresscf.* 
+			FROM vtiger_cbaddress 
+			INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_cbaddress.cbaddressid  
+			INNER JOIN vtiger_cbaddresscf ON vtiger_cbaddresscf.cbaddressid = vtiger_cbaddress.cbaddressid 
 			LEFT JOIN vtiger_users ON vtiger_users.id = vtiger_crmentity.smownerid 
 			LEFT JOIN vtiger_groups ON vtiger_groups.groupid = vtiger_crmentity.smownerid 
-			WHERE vtiger_address.addressid > 0 AND vtiger_crmentity.deleted = 0";*/
+			WHERE vtiger_cbaddress.cbaddressid > 0 AND vtiger_crmentity.deleted = 0";*/
 		
 		
 		if(isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !='' && $_REQUEST['acc_id'] ==''){
@@ -531,7 +531,7 @@ class Address extends CRMEntity {
 	function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			$admodule=Vtiger_Module::getInstance($modulename);
-			$admodule->addLink('HEADERSCRIPT', 'AddressCaptureFunctions', 'modules/Address/Address.js');
+			$admodule->addLink('HEADERSCRIPT', 'AddressCaptureFunctions', 'modules/cbAddress/cbAddress.js');
 			$mods = array('Contacts','Accounts','Invoice','Quotes','SalesOrder','PurchaseOrder');
 			foreach ($mods as $module) {
 				$modrel=Vtiger_Module::getInstance($module);
@@ -566,7 +566,7 @@ class Address extends CRMEntity {
 				}
 			}
 			// TODO Handle post installation actions
-			$this->setModuleSeqNumber('configure', $modulename, $modulename.'-', '0000001');
+			$this->setModuleSeqNumber('configure', $modulename, 'cbad-', '0000001');
 		} else if($event_type == 'module.disabled') {
 			// TODO Handle actions when this module is disabled.
 		} else if($event_type == 'module.enabled') {

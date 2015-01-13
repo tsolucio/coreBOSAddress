@@ -9,7 +9,7 @@
 document.write("<script type='text/javascript' src='include/js/Inventory.js'></script>");
 
 //function for the popup capture hook
-function mycapture(recordid,value,target_fieldname) {
+function cbaddresscapture(recordid,value,target_fieldname) {
 	vtlib_setvalue_from_popup(recordid,value,target_fieldname);
   //alert('This is our special intercepted capture function');
   window.close();

@@ -1,14 +1,14 @@
 <?xml version='1.0'?>
 <module>
-<name>Address</name>
-<label>Address</label>
+<name>cbAddress</name>
+<label>cbAddress</label>
 <parent>Tools</parent>
 <dependencies>
 <vtiger_version>5.5.0</vtiger_version>
 </dependencies>
 <license>
 <inline><![CDATA[/*************************************************************************************************
- * Copyright 2014 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
  * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
  * Vizsage Public License (the "License"). You may not use this file except in compliance with the
  * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
@@ -28,10 +28,10 @@
 </license>
 <tables>
 <table>
-<name>vtiger_address</name>
-<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtiger_address` (
-  `addressid` int(11) NOT NULL,
-  `addressno` varchar(255) DEFAULT NULL,
+<name>vtiger_cbaddress</name>
+<sql><![CDATA[CREATE TABLE IF NOT EXISTS `vtiger_cbaddress` (
+  `cbaddressid` int(11) NOT NULL,
+  `cbaddressno` varchar(255) DEFAULT NULL,
   `reference` varchar(250) DEFAULT NULL,
   `street` varchar(250) DEFAULT NULL,
   `pobox` varchar(250) DEFAULT NULL,
@@ -39,14 +39,14 @@
   `state` varchar(100) DEFAULT NULL,
   `postalcode` varchar(30) DEFAULT NULL,
   `country` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`addressid`)
+  PRIMARY KEY (`cbaddressid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
 <table>
-<name>vtiger_addresscf</name>
-<sql><![CDATA[CREATE TABLE `vtiger_addresscf` (
-  `addressid` int(11) NOT NULL,
-  PRIMARY KEY (`addressid`)
+<name>vtiger_cbaddresscf</name>
+<sql><![CDATA[CREATE TABLE `vtiger_cbaddresscf` (
+  `cbaddressid` int(11) NOT NULL,
+  PRIMARY KEY (`cbaddressid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 </table>
 </tables>
@@ -55,10 +55,10 @@
 <label>LBL_ADDRESS_INFORMATION</label>
 <fields>
 <field>
-<fieldname>addressno</fieldname>
+<fieldname>cbaddressno</fieldname>
 <uitype>4</uitype>
-<columnname>addressno</columnname>
-<tablename>vtiger_address</tablename>
+<columnname>cbaddressno</columnname>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Address Number</fieldlabel>
 <readonly>1</readonly>
@@ -74,15 +74,15 @@
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
 <entityidentifier>
-<entityidfield>addressid</entityidfield>
-<entityidcolumn>addressid</entityidcolumn>
+<entityidfield>cbaddressid</entityidfield>
+<entityidcolumn>cbaddressid</entityidcolumn>
 </entityidentifier>
 </field>
 <field>
 <fieldname>reference</fieldname>
 <uitype>1</uitype>
 <columnname>reference</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Reference</fieldlabel>
 <readonly>1</readonly>
@@ -102,7 +102,7 @@
 <fieldname>street</fieldname>
 <uitype>21</uitype>
 <columnname>street</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Street</fieldlabel>
 <readonly>1</readonly>
@@ -122,7 +122,7 @@
 <fieldname>pobox</fieldname>
 <uitype>1</uitype>
 <columnname>pobox</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>PO Box</fieldlabel>
 <readonly>1</readonly>
@@ -142,7 +142,7 @@
 <fieldname>city</fieldname>
 <uitype>1</uitype>
 <columnname>city</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>City</fieldlabel>
 <readonly>1</readonly>
@@ -162,7 +162,7 @@
 <fieldname>state</fieldname>
 <uitype>1</uitype>
 <columnname>state</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>State</fieldlabel>
 <readonly>1</readonly>
@@ -182,7 +182,7 @@
 <fieldname>postalcode</fieldname>
 <uitype>1</uitype>
 <columnname>postalcode</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Postal Code</fieldlabel>
 <readonly>1</readonly>
@@ -202,7 +202,7 @@
 <fieldname>country</fieldname>
 <uitype>1</uitype>
 <columnname>country</columnname>
-<tablename>vtiger_address</tablename>
+<tablename>vtiger_cbaddress</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Country</fieldlabel>
 <readonly>1</readonly>
@@ -316,7 +316,7 @@
 <setmetrics>false</setmetrics>
 <fields>
 <field>
-<fieldname>addressno</fieldname>
+<fieldname>cbaddressno</fieldname>
 <columnindex>0</columnindex>
 </field>
 <field>

@@ -9,8 +9,8 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-    'Address' => 'Address',
-    'SINGLE_Address' => 'Address',
+    'cbAddress' => 'Address',
+    'SINGLE_cbAddress' => 'Address',
     'Address ID' => 'Address ID',
     'Address Number' => 'Address Number',
     'Reference' => 'Reference',
