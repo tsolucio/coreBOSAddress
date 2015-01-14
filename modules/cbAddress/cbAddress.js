@@ -17,7 +17,7 @@ function cbAddressCapture(recordid,value,target_fieldname) {
 			InventorysetValueFromCapture(recordid,target_fieldname);
 		break;
 		case 'Contacts':
-			ContactssetValueFromCapture(recordid,target_fieldname);
+			ContactSetValueFromCapture(recordid,target_fieldname);
 		break;
 	}
 }
@@ -51,7 +51,7 @@ function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
 	}
 }
 
-function ContactssetValueFromCapture(recordid,target_fieldname) {
+function ContactSetValueFromCapture(recordid,target_fieldname) {
 	var url = "module=cbAddress&action=cbAddressAjax&ajax=true&file=getAddressInfo&record="+recordid;
 	new Ajax.Request(
 		'index.php',
