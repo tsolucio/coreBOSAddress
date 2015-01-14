@@ -521,8 +521,9 @@ class cbAddress extends CRMEntity {
 			foreach ($mods as $module) {
 				$modrel=Vtiger_Module::getInstance($module);
 				if ($modrel) {
-					$buttons = ($module=='Accounts' or $module=='Contacts') ? array('SELECT') : array();
-					$modrel->setRelatedList($admodule, $modulename, $buttons,'get_related_list');
+					if ($module=='Accounts' or $module=='Contacts') {
+						$modrel->setRelatedList($admodule, $modulename, array('SELECT'),'get_related_list');
+					}
 					$block = VTiger_Block::getInstance('LBL_ADDRESS_INFORMATION',$modrel);
 					$field1 = new Vtiger_Field();
 					$field1->name = 'linktoaddressbilling';
