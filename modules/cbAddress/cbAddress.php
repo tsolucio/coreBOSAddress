@@ -515,8 +515,11 @@ class cbAddress extends CRMEntity {
 	 */
 	function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
+			require_once('include/events/include.inc');
 			$admodule=Vtiger_Module::getInstance($modulename);
 			$admodule->addLink('HEADERSCRIPT', 'AddressCaptureFunctions', 'modules/cbAddress/cbAddress.js');
+			$em = new VTEventsManager($adb);
+			$em->registerHandler('corebos.filter.editview.setObjectValues', 'modules/cbAddress/setcbAddressField.php', 'cbAddressSetLinkFields');
 			$mods = array('Contacts','Accounts','Invoice','Quotes','SalesOrder','PurchaseOrder');
 			foreach ($mods as $module) {
 				$modrel=Vtiger_Module::getInstance($module);
