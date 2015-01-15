@@ -23,12 +23,12 @@ global $adb;
 $addressid = vtlib_purify($_REQUEST['record']);
 
 if (!empty($addressid)) {
-	$adrs = $adb->pquery('select * from vtiger_address where addressid=?',array($addressid));
+	$adrs = $adb->pquery('select * from vtiger_cbaddress where cbaddressid=?',array($addressid));
 	if ($adrs and $adb->num_rows($adrs)==1) {
 		$add = $adb->fetch_array($adrs);
 		$rdo = array(
-			'addressid' => $add['addressid'],
-			'addressno' => $add['addressno'],
+			'addressid' => $add['cbaddressid'],
+			'addressno' => $add['cbaddressno'],
 			'reference' => $add['reference'],
 			'street' => $add['street'],
 			'pobox' => $add['pobox'],

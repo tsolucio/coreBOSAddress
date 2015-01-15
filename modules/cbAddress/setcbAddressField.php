@@ -30,24 +30,53 @@ class cbAddressSetLinkFields extends VTEventHandler {
 	public function handleFilter($handlerType, $focus) {
 		global $adb,$log,$currentModule;
 		if ($handlerType=='corebos.filter.editview.setObjectValues' and
-			in_array($currentModule, array('Quotes','SalesOrder','Invoice','PurchaseOrder')) and
-			((isset ($_REQUEST['account_id']) and $_REQUEST['account_id'] != '') or
-			 (isset ($_REQUEST['contact_id']) && $_REQUEST['contact_id'] != '')) and
-			($_REQUEST['record'] == '' || $_REQUEST['convertmode'] == "potentoinvoice") and
-			$_REQUEST['convertmode'] != 'update_so_val' and
-			$_REQUEST['convertmode'] != 'update_quote_val'
-		) {
-			if (isset($_REQUEST['account_id'])) {
-				$sql = 'select linktoaddressbilling,linktoaddressshipping from vtiger_account where accountid=?';
-				$crmid = vtlib_purify($_REQUEST['account_id']);
-			} else {
-				$sql = 'select linktoaddressbilling,linktoaddressshipping from vtiger_contactdetails where contactid=?';
-				$crmid = vtlib_purify($_REQUEST['contact_id']);
+		  in_array($currentModule, array('Quotes','SalesOrder','Invoice','PurchaseOrder'))) {
+			if (((isset ($_REQUEST['account_id']) and $_REQUEST['account_id'] != '') or
+				 (isset ($_REQUEST['contact_id']) && $_REQUEST['contact_id'] != '')) and
+				($_REQUEST['record'] == '' || $_REQUEST['convertmode'] == "potentoinvoice") and
+				$_REQUEST['convertmode'] != 'update_so_val' and
+				$_REQUEST['convertmode'] != 'update_quote_val'
+			) {
+				if (isset($_REQUEST['account_id'])) {
+					$sql = 'select linktoaddressbilling,linktoaddressshipping from vtiger_account where accountid=?';
+					$crmid = vtlib_purify($_REQUEST['account_id']);
+				} else {
+					$sql = 'select linktoaddressbilling,linktoaddressshipping from vtiger_contactdetails where contactid=?';
+					$crmid = vtlib_purify($_REQUEST['contact_id']);
+				}
+				$abrs = $adb->pquery($sql,array($crmid));
+				if ($abrs and $adb->num_rows($abrs)==1) {
+					$focus->column_fields['linktoaddressbilling'] = $adb->query_result($abrs,0,'linktoaddressbilling');
+					$focus->column_fields['linktoaddressshipping'] = $adb->query_result($abrs,0,'linktoaddressshipping');
+				}
+			} elseif (empty($_REQUEST['account_id']) and empty($_REQUEST['contact_id']) and
+			  empty($_REQUEST['record']) and (!empty($_REQUEST['linktoaddressshipping']) or !empty($_REQUEST['linktoaddressbilling']))) {
+				if (!empty($_REQUEST['linktoaddressbilling'])) {
+					$addressid = vtlib_purify($_REQUEST['linktoaddressbilling']);
+					$adrs = $adb->pquery('select * from vtiger_cbaddress where cbaddressid=?',array($addressid));
+					if ($adrs and $adb->num_rows($adrs)==1) {
+						$add = $adb->fetch_array($adrs);
+						$focus->column_fields['bill_city'] = $add['city'];
+						$focus->column_fields['bill_street'] = $add['street'];
+						$focus->column_fields['bill_state'] = $add['state'];
+						$focus->column_fields['bill_code'] = $add['postalcode'];
+						$focus->column_fields['bill_country'] = $add['country'];
+						$focus->column_fields['bill_pobox'] = $add['pobox'];
+					}
+				}
+				if (!empty($_REQUEST['linktoaddressshipping'])) {
+					$addressid = vtlib_purify($_REQUEST['linktoaddressshipping']);
+					$adrs = $adb->pquery('select * from vtiger_cbaddress where cbaddressid=?',array($addressid));
+					if ($adrs and $adb->num_rows($adrs)==1) {
+						$focus->column_fields['ship_city'] = $add['city'];
+						$focus->column_fields['ship_street'] = $add['street'];
+						$focus->column_fields['ship_state'] = $add['state'];
+						$focus->column_fields['ship_code'] = $add['postalcode'];
+						$focus->column_fields['ship_country'] = $add['country'];
+						$focus->column_fields['ship_pobox'] = $add['pobox'];
+					}
+				}
 			}
-			$ab = $adb->query_result($adb->pquery($sql,$crmid),0,'linktoaddressbilling');
-			$as = $adb->query_result($adb->pquery($sql,$crmid),0,'linktoaddressshipping');
-			$focus->column_fields['linktoaddressbilling'] = $ab;
-			$focus->column_fields['linktoaddressshipping'] = $as;
 		}
 		return $focus;
 	}

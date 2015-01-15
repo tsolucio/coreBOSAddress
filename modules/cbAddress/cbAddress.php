@@ -46,63 +46,63 @@ class cbAddress extends CRMEntity {
 	var $list_fields = Array (
 		/* Format: Field Label => Array(tablename, columnname) */
 		// tablename should not have prefix 'vtiger_'
-            'Address Number'=> Array('cbaddress', 'cbcbaddressno'),
-            'Reference'=> Array('cbaddress', 'reference'),
-            'Street'=> Array('cbaddress', 'street'),
-            'PO Box'=> Array('cbaddress', 'pobox'),
-            'City'=> Array('cbaddress', 'city'),
-            'State'=> Array('cbaddress', 'state'),
-            'Postal Code'=> Array('cbaddress', 'postalcode'),
-            'Country'=> Array('cbaddress', 'country')
+		'Address Number'=> Array('cbaddress', 'cbaddressno'),
+		'Reference'=> Array('cbaddress', 'reference'),
+		'Street'=> Array('cbaddress', 'street'),
+		'PO Box'=> Array('cbaddress', 'pobox'),
+		'City'=> Array('cbaddress', 'city'),
+		'State'=> Array('cbaddress', 'state'),
+		'Postal Code'=> Array('cbaddress', 'postalcode'),
+		'Country'=> Array('cbaddress', 'country')
 	);
 	var $list_fields_name = Array(
 		/* Format: Field Label => fieldname */
-            'Address Number'=> 'cbcbaddressno',
-            'Reference'=> 'reference',
-            'Street'=> 'street',
-            'PO Box'=> 'pobox',
-            'City'=> 'city',
-            'State'=> 'state',
-            'Postal Code'=> 'postalcode',
-            'Country'=> 'country'
+		'Address Number'=> 'cbaddressno',
+		'Reference'=> 'reference',
+		'Street'=> 'street',
+		'PO Box'=> 'pobox',
+		'City'=> 'city',
+		'State'=> 'state',
+		'Postal Code'=> 'postalcode',
+		'Country'=> 'country'
 	);
 
 	// Make the field link to detail view from list view (Fieldname)
-	var $list_link_field = 'cbcbaddressno';
+	var $list_link_field = 'cbaddressno';
 
 	// For Popup listview and UI type support
 	var $search_fields = Array(
 		/* Format: Field Label => Array(tablename, columnname) */
 		// tablename should not have prefix 'vtiger_'
-            'Address Number'=> Array('cbaddress', 'cbcbaddressno'),
-            'Reference'=> Array('cbaddress', 'reference'),
-            'Street'=> Array('cbaddress', 'street'),
-            'PO Box'=> Array('cbaddress', 'pobox'),
-            'City'=> Array('cbaddress', 'city'),
-            'State'=> Array('cbaddress', 'state'),
-            'Postal Code'=> Array('cbaddress', 'postalcode'),
-            'Country'=> Array('cbaddress', 'country')
+		'Address Number'=> Array('cbaddress', 'cbaddressno'),
+		'Reference'=> Array('cbaddress', 'reference'),
+		'Street'=> Array('cbaddress', 'street'),
+		'PO Box'=> Array('cbaddress', 'pobox'),
+		'City'=> Array('cbaddress', 'city'),
+		'State'=> Array('cbaddress', 'state'),
+		'Postal Code'=> Array('cbaddress', 'postalcode'),
+		'Country'=> Array('cbaddress', 'country')
 	);
 	var $search_fields_name = Array(
 		/* Format: Field Label => fieldname */
-            'Address Number'=> 'cbcbaddressno',
-            'Reference'=> 'reference',
-            'Street'=> 'street',
-            'PO Box'=> 'pobox',
-            'City'=> 'city',
-            'State'=> 'state',
-            'Postal Code'=> 'postalcode',
-            'Country'=> 'country'
+		'Address Number'=> 'cbaddressno',
+		'Reference'=> 'reference',
+		'Street'=> 'street',
+		'PO Box'=> 'pobox',
+		'City'=> 'city',
+		'State'=> 'state',
+		'Postal Code'=> 'postalcode',
+		'Country'=> 'country'
 	);
 
 	// For Popup window record selection
-	var $popup_fields = Array('cbcbaddressno');
+	var $popup_fields = Array('cbaddressno');
 
 	// Placeholder for sort fields - All the fields will be initialized for Sorting through initSortFields
 	var $sortby_fields = Array();
 
 	// For Alphabetical search
-	var $def_basicsearch_col = 'cbcbaddressno';
+	var $def_basicsearch_col = 'cbaddressno';
 
 	// Column value to use on detail view record text display
 	var $def_detailview_recname = 'cbaddressno';
@@ -171,60 +171,56 @@ class cbAddress extends CRMEntity {
 	function getQueryByModuleField($module, $fieldname, $srcrecord, $query='') {
 		// $srcrecord could be empty
 		global $adb,$log;
-		$log->debug("moduliadd".$module);
-		$query_ex = explode('INNER',$query,3);
-		if($module == 'Invoice' || $module == 'Contacts' || $module == 'Quotes' || $module == 'SalesOrder'){
-			$log->debug("modulinv".$module);
-		$accountID = vtlib_purify($_REQUEST['acc_id']);
-		$contactID = vtlib_purify($_REQUEST['cont_id']);
-		/*$query = "SELECT vtiger_crmentity.*, vtiger_cbaddress.*, vtiger_cbaddresscf.* 
+		$query_relation = ' INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) ';
+		$wherepos = stripos($query, 'where'); // there is always a where
+		$query_body = substr($query, 0, $wherepos-1);
+		$query_cond = substr($query, $wherepos+5);
+		if($module == 'Invoice' || $module == 'Contacts' || $module == 'Quotes' || $module == 'SalesOrder') {
+			$accountID = vtlib_purify($_REQUEST['acc_id']);
+			$contactID = vtlib_purify($_REQUEST['cont_id']);
+			/*$query = "SELECT vtiger_crmentity.*, vtiger_cbaddress.*, vtiger_cbaddresscf.* 
 			FROM vtiger_cbaddress 
 			INNER JOIN vtiger_crmentity ON vtiger_crmentity.crmid = vtiger_cbaddress.cbaddressid  
 			INNER JOIN vtiger_cbaddresscf ON vtiger_cbaddresscf.cbaddressid = vtiger_cbaddress.cbaddressid 
 			LEFT JOIN vtiger_users ON vtiger_users.id = vtiger_crmentity.smownerid 
 			LEFT JOIN vtiger_groups ON vtiger_groups.groupid = vtiger_crmentity.smownerid 
-			WHERE vtiger_cbaddress.cbaddressid > 0 AND vtiger_crmentity.deleted = 0";*/
-		
-		
-		if(isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !='' && $_REQUEST['acc_id'] ==''){
-			$query1 = $query_ex[0]." INNER ".$query_ex[1]." INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) INNER ".$query_ex[2]." AND (vtiger_crmentityrel.crmid = ".$contactID." OR vtiger_crmentityrel.relcrmid = ".$contactID.")";
-			return $query1;
-		}
-		elseif((isset($_REQUEST['acc_id']) && $_REQUEST['acc_id'] !='' && $_REQUEST['cont_id'] =='' )){
-			$query1= $query_ex[0]." INNER ".$query_ex[1]."INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) INNER ".$query_ex[2]." AND (vtiger_crmentityrel.crmid = ".$accountID." OR vtiger_crmentityrel.relcrmid = ".$accountID.")";
-			return $query1;
-		}
-   		elseif(isset($_REQUEST['acc_id']) && $_REQUEST['acc_id'] !='' && isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !=''){
-			$query1=$query_ex[0]." INNER ".$query_ex[1]."INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) INNER ".$query_ex[2]." AND (vtiger_crmentityrel.crmid = ".$contactID." OR vtiger_crmentityrel.relcrmid = ".$contactID." 
-			OR vtiger_crmentityrel.crmid = ".$accountID." OR vtiger_crmentityrel.relcrmid = ".$accountID.") ";
-			$res = $adb->query($query1);
-			$number= $adb->num_rows($res);
-			if($number > 0){
-				 return $query1;
+			WHERE vtiger_cbaddress.cbaddressid > 0 AND vtiger_crmentity.deleted = 0" ORDER BY cbaddressno ASC ;*/
+			if(isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !='' && $_REQUEST['acc_id'] =='') {
+				$query1 = $query_body . $query_relation . " WHERE (vtiger_crmentityrel.crmid = $contactID OR vtiger_crmentityrel.relcrmid = $contactID) and " . $query_cond;
+				return $query1;
+			}
+			elseif((isset($_REQUEST['acc_id']) && $_REQUEST['acc_id'] !='' && $_REQUEST['cont_id'] =='' )) {
+				$query1 = $query_body . $query_relation . " WHERE (vtiger_crmentityrel.crmid = $accountID OR vtiger_crmentityrel.relcrmid = $accountID) and " . $query_cond;
+				return $query1;
+			}
+			elseif(isset($_REQUEST['acc_id']) && $_REQUEST['acc_id'] !='' && isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !=''){
+				$query1 = $query_body . $query_relation . " WHERE (vtiger_crmentityrel.crmid = $accountID OR vtiger_crmentityrel.relcrmid = $accountID or vtiger_crmentityrel.crmid = $contactID OR vtiger_crmentityrel.relcrmid = $contactID) and " . $query_cond;
+				$res = $adb->query($query1);
+				$number= $adb->num_rows($res);
+				if($number > 0){
+					 return $query1;
+				}
+				else return $query;
 			}
 			else return $query;
 		}
-		else return $query;
-		}
 		elseif($module == 'Accounts'){
-			$log->debug("modulinv".$module);
 			$accountID = vtlib_purify($_REQUEST['acc_id']);
 			if((isset($_REQUEST['acc_id']) && $_REQUEST['acc_id'] !='')){
-				$query1 = $query_ex[0]." INNER ".$query_ex[1]."INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) INNER ".$query_ex[2]." AND (vtiger_crmentityrel.crmid = ".$accountID." OR vtiger_crmentityrel.relcrmid = ".$accountID.")";
+				$query1 = $query_body . $query_relation . " WHERE (vtiger_crmentityrel.crmid = $accountID OR vtiger_crmentityrel.relcrmid = $accountID) and " . $query_cond;;
 				return $query1;
 			}
 			else return $query;
 		}
 		elseif($module == 'PurchaseOrder'){
-			$log->debug("modulpo".$module);
 			$contactID = vtlib_purify($_REQUEST['cont_id']);
 			if((isset($_REQUEST['cont_id']) && $_REQUEST['cont_id'] !='')){
-				$query1 = $query_ex[0]." INNER ".$query_ex[1]."INNER JOIN vtiger_crmentityrel ON (vtiger_crmentityrel.relcrmid = vtiger_crmentity.crmid OR vtiger_crmentityrel.crmid = vtiger_crmentity.crmid) INNER ".$query_ex[2]." AND (vtiger_crmentityrel.crmid = ".$contactID." OR vtiger_crmentityrel.relcrmid = ".$contactID.")";
+				$query1 = $query_body . $query_relation . " WHERE (vtiger_crmentityrel.crmid = $contactID OR vtiger_crmentityrel.relcrmid = $contactID) and " . $query_cond;;
 				return $query1;
 			}
 			else return $query;
 		}
-	else return $query;
+		return $query;
 	}
 
 	/**
@@ -515,6 +511,7 @@ class cbAddress extends CRMEntity {
 	 */
 	function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
+			global $adb;
 			require_once('include/events/include.inc');
 			$admodule=Vtiger_Module::getInstance($modulename);
 			$admodule->addLink('HEADERSCRIPT', 'AddressCaptureFunctions', 'modules/cbAddress/cbAddress.js');

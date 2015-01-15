@@ -9,7 +9,7 @@
  ************************************************************************************/
 
 $mod_strings = Array(
-    'cbAddress' => 'Dirección',
+    'cbAddress' => 'Direcciones',
     'SINGLE_cbAddress' => 'Dirección',
     'Address ID' => 'ID Dirección',
     'Address Number' => 'Nº Dirección',
