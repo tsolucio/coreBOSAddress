@@ -250,7 +250,7 @@
 <defaultvalue></defaultvalue>
 <sequence>10</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>T~O</typeofdata>
+<typeofdata>DT~O</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
@@ -270,7 +270,7 @@
 <defaultvalue></defaultvalue>
 <sequence>11</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>T~O</typeofdata>
+<typeofdata>DT~O</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
 <displaytype>2</displaytype>
