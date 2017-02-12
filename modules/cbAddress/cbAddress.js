@@ -31,22 +31,20 @@ function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
 		var contactid = document.getElementsByName("contact_id")[0].value;
 	switch (MODULE) {
 		case 'Accounts':
-			window.open(baseURL+"&forrecord="+ID+"&acc_id="+ID,"vtlibui10",WindowSettings);
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+ID+"&cbcustompopupinfo=acc_id","vtlibui10",WindowSettings);
 		break;
 		case 'Contacts':
-			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid,"vtlibui10",WindowSettings);
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid+"&cbcustompopupinfo=acc_id;cont_id","vtlibui10",WindowSettings);
 		break;
 		case 'SalesOrder':
-			window.open(baseURL+"&cont_id="+contactid+"&acc_id="+accountid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
+		case 'Invoice':
+			window.open(baseURL+"&cont_id="+contactid+"&acc_id="+accountid+"&relmod_id="+accountid+"&cbcustompopupinfo=acc_id;cont_id;relmod_id","vtlibui10",WindowSettings);
 		break;
 		case 'Quotes':
-			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
+			window.open(baseURL+"&forrecord="+ID+"&acc_id="+accountid+"&cont_id="+contactid+"&relmod_id="+accountid+"&cbcustompopupinfo=acc_id;cont_id;relmod_id","vtlibui10",WindowSettings);
 		break;
 		case 'PurchaseOrder':
-			window.open(baseURL+"&forrecord="+ID+"&cont_id="+contactid+"&relmod_id="+contactid,"vtlibui10",WindowSettings);
-		break;
-		case 'Invoice':
-			window.open(baseURL+"&acc_id="+accountid+"&cont_id="+contactid+"&relmod_id="+accountid+"&relmod_id="+accountid,"vtlibui10",WindowSettings);
+			window.open(baseURL+"&forrecord="+ID+"&cont_id="+contactid+"&relmod_id="+contactid+"&cbcustompopupinfo=cont_id;relmod_id","vtlibui10",WindowSettings);
 		break;
 	}
 }
