@@ -8,7 +8,7 @@
  * All Rights Reserved.
  ************************************************************************************/
 
-$mod_strings = Array(
+$mod_strings = array(
     'cbAddress' => 'Addresses',
     'SINGLE_cbAddress' => 'Address',
     'Address ID' => 'Address ID',
@@ -27,5 +27,4 @@ $mod_strings = Array(
     'LBL_DESCRIPTION_INFORMATION' => 'Description',
     'LBL_CUSTOM_INFORMATION' => 'Custom Information',
 );
-
 ?>

@@ -18,5 +18,4 @@ $mod_strings = array (
     'LBL_ADDRESS_INFORMATION' => 'Indirizzo Information',
     'LBL_DESCRIPTION_INFORMATION' => 'Description',
 );
-
 ?>

@@ -11,6 +11,13 @@ function cbAddressCapture(recordid,value,target_fieldname) {
 	switch (module) {
 		case 'Accounts':
 		case 'SalesOrder':
+	}
+}
+
+function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
+	var WindowSettings = "width=680,height=602,resizable=0,scrollbars=0,top=150,left=200";
+	var baseURL = "index.php?module=cbAddress&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&srcmodule="+MODULE;
+	if (MODULE != 'PurchaseOrder')
 		case 'Quotes':
 		case 'PurchaseOrder':
 		case 'Invoice':
@@ -19,13 +26,6 @@ function cbAddressCapture(recordid,value,target_fieldname) {
 		case 'Contacts':
 			ContactSetValueFromCapture(recordid,target_fieldname);
 		break;
-	}
-}
-
-function cbAddressOpenCapture(fromlink,fldname,MODULE,ID) {
-	var WindowSettings = "width=680,height=602,resizable=0,scrollbars=0,top=150,left=200";
-	var baseURL = "index.php?module=cbAddress&action=Popup&html=Popup_picker&form=vtlibPopupView&forfield="+fldname+"&srcmodule="+MODULE;
-	if (MODULE != 'PurchaseOrder')
 		var accountid = document.getElementsByName("account_id")[0].value;
 	if (MODULE != 'Accounts')
 		var contactid = document.getElementsByName("contact_id")[0].value;

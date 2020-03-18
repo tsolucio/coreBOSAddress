@@ -4,11 +4,12 @@
 <label>cbAddress</label>
 <parent>Tools</parent>
 <dependencies>
-<vtiger_version>5.5.0</vtiger_version>
+<vtiger_version>5.4.0</vtiger_version>
+<vtiger_max_version>5.*</vtiger_max_version>
 </dependencies>
 <license>
 <inline><![CDATA[/*************************************************************************************************
- * Copyright 2015 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
+ * Copyright 2020 Opencubed -- This file is a part of TSOLUCIO coreBOS customizations.
  * You can copy, adapt and distribute the work under the "Attribution-NonCommercial-ShareAlike"
  * Vizsage Public License (the "License"). You may not use this file except in compliance with the
  * License. Roughly speaking, non-commercial users may share and modify this code, but must give credit
@@ -228,15 +229,35 @@
 <readonly>1</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
-<sequence>9</sequence>
+<sequence>1</sequence>
 <maximumlength>100</maximumlength>
-<typeofdata>V~O</typeofdata>
+<typeofdata>V~M</typeofdata>
 <quickcreate>1</quickcreate>
 <quickcreatesequence></quickcreatesequence>
 <displaytype>1</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
 <masseditable>1</masseditable>
+</field>
+<field>
+<fieldname>created_user_id</fieldname>
+<uitype>52</uitype>
+<columnname>smcreatorid</columnname>
+<tablename>vtiger_crmentity</tablename>
+<generatedtype>1</generatedtype>
+<fieldlabel>Created By</fieldlabel>
+<readonly>1</readonly>
+<presence>0</presence>
+<selected>0</selected>
+<sequence>2</sequence>
+<maximumlength>100</maximumlength>
+<typeofdata>V~O</typeofdata>
+<quickcreate>3</quickcreate>
+<quickcreatesequence>1</quickcreatesequence>
+<displaytype>2</displaytype>
+<info_type>BAS</info_type>
+<helpinfo><![CDATA[]]></helpinfo>
+<masseditable>0</masseditable>
 </field>
 <field>
 <fieldname>createdtime</fieldname>
@@ -247,8 +268,8 @@
 <fieldlabel>Created Time</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>10</sequence>
+<selected>0</selected>
+<sequence>3</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>1</quickcreate>
@@ -256,7 +277,7 @@
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
+<masseditable>0</masseditable>
 </field>
 <field>
 <fieldname>modifiedtime</fieldname>
@@ -267,8 +288,8 @@
 <fieldlabel>Modified Time</fieldlabel>
 <readonly>1</readonly>
 <presence>2</presence>
-<defaultvalue></defaultvalue>
-<sequence>11</sequence>
+<selected>0</selected>
+<sequence>4</sequence>
 <maximumlength>100</maximumlength>
 <typeofdata>DT~O</typeofdata>
 <quickcreate>1</quickcreate>
@@ -276,7 +297,7 @@
 <displaytype>2</displaytype>
 <info_type>BAS</info_type>
 <helpinfo><![CDATA[]]></helpinfo>
-<masseditable>1</masseditable>
+<masseditable>0</masseditable>
 </field>
 </fields>
 </block>
@@ -290,9 +311,9 @@
 <fieldname>description</fieldname>
 <uitype>19</uitype>
 <columnname>description</columnname>
+<tablename>vtiger_crmentity</tablename>
 <generatedtype>1</generatedtype>
 <fieldlabel>Description</fieldlabel>
-<tablename>vtiger_crmentity</tablename>
 <readonly>1</readonly>
 <presence>2</presence>
 <defaultvalue></defaultvalue>
@@ -425,6 +446,10 @@
 <relatedmodule>PurchaseOrder</relatedmodule>
 </relatedlist>
 </relatedlists>
+<events>
+</events>
+<customlinks>
+</customlinks>
 <crons>
 </crons>
 </module>
