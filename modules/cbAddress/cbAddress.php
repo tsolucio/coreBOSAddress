@@ -23,7 +23,7 @@ class cbAddress extends CRMEntity {
 	/** Indicator if this is a custom module or standard module */
 	public $IsCustomModule = true;
 	public $HasDirectImageField = false;
-	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-account', 'class' => 'slds-icon', 'icon'=>'account');
+	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-address', 'class' => 'slds-icon', 'icon'=>'address');
 
 	/**
 	 * Mandatory table for supporting custom fields.
@@ -135,6 +135,7 @@ class cbAddress extends CRMEntity {
 		if ($this->HasDirectImageField) {
 			$this->insertIntoAttachment($this->id, $module);
 		}
+	}
 
 	/**
 	 * Return query to use based on given modulename, fieldname
